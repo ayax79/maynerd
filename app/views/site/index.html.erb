@@ -1,3 +1,33 @@
-<div class="span-24">You have been successfully logged in!
+<div class="span-24 prepend-top last">
+  Would you like to <%= link_to "Logout?", :controller => 'sessions', :action => 'destroy' %>
+</div>
+<div class="span-8 append-16 prepend-top last">
+  <div class="line-box">
+    <div class="section-title">User Information</div>
+    Name: <%= @current_user.name %><br />
+    Login: <%= @current_user.login %><br />
+    Email: <%= @current_user.email %>
+  </div>
+</div>
+<div class="span-8 append-16 prepend-top last">
+  <div class="line-box">
+    <div class="section-title">Your OpenIDs</div>
 
-  Would you like to <%= link_to "Logout?", :controller => 'sessions', :action => 'destroy' %></div>
+    <% if @mappings.length == 0 %>
+        <p>No OpenIDs are associated with this account.</p>
+    <% else %>
+        <p>OpenIDs associated with this account:</p>
+
+        <ul>
+          <% @mappings.each do |mapping| %>
+              <li><%= h mapping %> -
+                <%= link_to "X", :controller => :sessions,
+                            :action => "rpx_unmap", :openid => identifier %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+
+    <%= link_to "Add an OpenID to your account", rpx_map_url, :class => 'rpxnow' %>
+  </div>
+</div>

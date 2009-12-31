@@ -9,7 +9,7 @@
 
 <div class="container">
   <% if flash[:notice] %>
-      <p class="notice"><%= flash[:notice] %></p>
+      <div class="notice prepend-top span-24 last"><%= flash[:notice] %></div>
   <% end %>
   <%= yield %>
 </div>
