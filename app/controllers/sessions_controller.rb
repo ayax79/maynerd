@@ -63,6 +63,7 @@ class SessionsController < ApplicationController
       if !user
         # we need to create a new user
         user = User.new
+        user.login = username
         #hack since the default restful configuration generated user required a password
         user.password = generate_password
         #noinspection RubyResolve
