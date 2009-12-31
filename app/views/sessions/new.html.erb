@@ -1,4 +1,8 @@
-<div class="span-8">
+<div class="form-title span-24 prepend-top last">
+  Login
+</div>
+
+<div class="span-4">
   <% form_tag session_path do -%>
       <p><%= label_tag 'login' %><br/>
         <%= text_field_tag 'login', @login %></p>
@@ -11,16 +15,19 @@
   <% end -%>
 </div>
 
-<a class="rpxnow" onclick="return false;"
-   href="<%= rpx_token_url %>">
-  Use RPX
-</a>
+<div class="span-20 prepend-top last">
+  <a class="rpxnow" onclick="return false;"
+     href="<%= rpx_token_url %>">
+    Login with an external account 
+  </a> <br />
+  <%= link_to "Register", :controller => 'users', :action => 'new' %>
+</div>
 
 
 <script src="https://rpxnow.com/openid/v2/widget"
         type="text/javascript"></script>
 <script type="text/javascript">
-  RPXNOW.overlay = true;
-  RPXNOW.language_preference = 'en';
+    RPXNOW.overlay = true;
+    RPXNOW.language_preference = 'en';
 </script>
 

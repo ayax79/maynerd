@@ -1,19 +1,44 @@
-<h1>Sign up as a new user</h1>
+<div class="span-24 form-title prepend-top last">
+  Sign up as a new user
+</div>
+<div class="span-24 last" style="padding-bottom: 5px;">
+  <%= link_to "Return to login", '/login' %>
+</div>
 <% @user.password = @user.password_confirmation = nil %>
 
-<%= error_messages_for :user %>
+<%= error_messages_for :user, :class => 'error' %>
 <% form_for :user, :url => users_path do |f| -%>
-<p><%= label_tag 'login' %><br/>
-<%= f.text_field :login %></p>
 
-<p><%= label_tag 'email' %><br/>
-<%= f.text_field :email %></p>
+    <div class="span-2">
+      <%= label_tag 'login' %>
+    </div>
+    <div class="span-22 last">
+      <%= f.text_field :login %>
+    </div>
 
-<p><%= label_tag 'password' %><br/>
-<%= f.password_field :password %></p>
+    <div class="span-2">
+      <%= label_tag 'email' %>
+    </div>
+    <div class="span-22 last">
+      <%= f.text_field :email %>
+    </div>
 
-<p><%= label_tag 'password_confirmation', 'Confirm Password' %><br/>
-<%= f.password_field :password_confirmation %></p>
+    <div class="span-2">
+      <%= label_tag 'password' %>
+    </div>
+    <div class="span-22 last">
+      <%= f.password_field :password %>
+    </div>
 
-<p><%= submit_tag 'Sign up' %></p>
+    <div class="span-2">
+      <%= label_tag 'password_confirmation', 'Confirm Password' %>
+    </div>
+    <div class="span-22 last">
+      <%= f.password_field :password_confirmation %>
+    </div>
+
+    <div class="prepend-2"></div>
+    <div class="span-22 last">
+      <%= submit_tag 'Sign up' %>
+    </div>
 <% end -%>
