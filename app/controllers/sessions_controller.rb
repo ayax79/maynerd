@@ -106,12 +106,8 @@ class SessionsController < ApplicationController
     primary_key = data["primaryKey"]
 
     if primary_key.nil?
-      if @current_user.nil?
-        flash[:notice] = "you are not signed in"
-      else
-        @rpx.map identifier, @current_user.id
-        flash[:notice] = "#{identifier} added to your account"
-      end
+      @rpx.map identifier, self.current_user.id
+      flash[:notice] = "#{identifier} added to your account"
       redirect_to :controller => "site", :action => "index"
     else
       if @current_user.id == primary_key.to_i
@@ -130,7 +126,7 @@ class SessionsController < ApplicationController
   def rpx_unmap
     identifier = params[:openid]
 
-    @rpx.unmap identifier, @current_user.id
+    @rpx.unmap identifier, self.current_user.id
     flash[:notice] = "OpenID #{identifier} removed"
 
     redirect_to :controller => :site, :action => "index"
@@ -152,6 +148,5 @@ class SessionsController < ApplicationController
     #Finally I guess we just use their full url
     data['primaryKey']
   end
-
 
 end
