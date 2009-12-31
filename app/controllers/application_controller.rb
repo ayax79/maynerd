@@ -15,6 +15,13 @@ class ApplicationController < ActionController::Base
   before_filter :rpx_setup
   before_filter :login_required
 
+  protected
+
+  def generate_password(size=8)
+    alphanumerics = [('0'..'9'), ('A'..'Z'), ('a'..'z')].map {|range| range.to_a}.flatten
+    (0...size).map { alphanumerics[Kernel.rand(alphanumerics.size)] }.join
+  end
+
   private
 
   def rpx_setup

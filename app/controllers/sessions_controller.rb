@@ -2,6 +2,7 @@
 class SessionsController < ApplicationController
 
   skip_before_filter :login_required
+  skip_before_filter :verify_authenticity_token
 
   def new
   end
@@ -55,14 +56,24 @@ class SessionsController < ApplicationController
     primary_key = data["primaryKey"]
 
 
-    # we need to create and map a new user
     if !primary_key
-      user = User.new
-      user.login = determine_username_from_rpx_response(data)
-      user.save
-      primary_key = user.id
-      @rpx.map identifier, primary_key
-      self.current_user
+
+      username = determine_username_from_rpx_response(data)
+      user = User.find_by_login username
+      if !user
+        # we need to create a new user
+        user = User.new
+        #hack since the default restful configuration generated user required a password
+        user.password = generate_password
+        #noinspection RubyResolve
+        user.password_confirmation = user.password
+        user.save!
+        user.reload
+      end
+
+      @rpx.map identifier, user.id
+      self.current_user = user
+
     elsif identifier
       self.current_user = User.find(identifier)
     end
@@ -83,13 +94,10 @@ class SessionsController < ApplicationController
   end
 
   def determine_username_from_rpx_response(data)
-    profile = data['profile']
-    if profile
-      username = profile['preferredUsername']
-      return username if username
-      username = profile['displayName']
-      return username if username
-    end
+    username = data['preferredUsername']
+    return username if username
+    username = data['displayName']
+    return username if username
     #Finally I guess we just use their full url
     data['primaryKey']
   end

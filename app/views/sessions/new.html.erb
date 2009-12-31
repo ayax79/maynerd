@@ -10,8 +10,17 @@
 
   <% end -%>
 </div>
-<div class="span-16 last">
-  <iframe src="https://maynerd.rpxnow.com/openid/embed?token_url=<%= rpx_token_url %>"
-          scrolling="no" frameBorder="no" style="width:400px;height:240px;">
-  </iframe>
-</div>
+
+<a class="rpxnow" onclick="return false;"
+   href="<%= rpx_token_url %>">
+  Use RPX
+</a>
+
+
+<script src="https://rpxnow.com/openid/v2/widget"
+        type="text/javascript"></script>
+<script type="text/javascript">
+  RPXNOW.overlay = true;
+  RPXNOW.language_preference = 'en';
+</script>
+
