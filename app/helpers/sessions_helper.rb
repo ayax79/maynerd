@@ -5,7 +5,7 @@ module SessionsHelper
     @rpx.signin_url(dest)
   end
 
-  def rpx_associate_url
+  def rpx_token_url
     dest = url_for :controller => :rpx, :action => :associate_return, :only_path => false
     @rpx.signin_url(dest)
   end

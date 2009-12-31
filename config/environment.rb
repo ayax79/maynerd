@@ -19,6 +19,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
+  config.gem 'json', :version => '1.2.0'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -42,4 +43,7 @@ Rails::Initializer.run do |config|
 
 end
 
+# rpx configuration
 RPX_BASE_URL = 'https://rpxnow.com'
+RPX_API_KEY = '07d8dfed559df3751e05fdb4ab2bdaf94d4b48c4'
+RPX_REALM = 'maynerd'
