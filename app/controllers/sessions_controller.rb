@@ -115,9 +115,10 @@ class SessionsController < ApplicationController
         redirect_to :controller => "site", :action => "index"
       else
         # The OpenID was already associated with a different user account.
-        @page_title = "Replace OpenID Account"
         session[:identifier] = identifier
         @other_user = User.find_by_id primary_key
+        flash[:notice] = "That OpenID was already associated with #{@other_user.login}"
+        redirect_to :controller => "site", :action => "index"
       end
     end
 
