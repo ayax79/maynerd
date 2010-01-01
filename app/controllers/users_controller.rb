@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  skip_before_filter :login_required
+  before_filter :login_required, :except => [ :create, :new ]
 
   def new
     @user = User.new
@@ -23,4 +23,17 @@ class UsersController < ApplicationController
       render :action => 'new'
     end
   end
+
+  def update
+    user = self.current_user
+
+    respond_to do |format|
+      if user.update_attributes(params[:user])
+        format.json { head :ok }
+        format.xml { head :ok }
+      end
+    end
+
+  end
+
 end
