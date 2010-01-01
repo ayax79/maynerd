@@ -47,3 +47,5 @@ end
 RPX_BASE_URL = 'https://rpxnow.com'
 RPX_API_KEY = '07d8dfed559df3751e05fdb4ab2bdaf94d4b48c4'
 RPX_REALM = 'maynerd'
+
+GOOGLE_AJAX_KEY = 'ABQIAAAADTw3xqlIM2Kt9uP_5w-n2xRArwHFrw9hVhN7x3g-NnGA7krgYBRO5FMXYZqPhM9yXiS3Tw93SmmFwA'
