@@ -2,3 +2,10 @@
 <%= stylesheet_link_tag "print", :media => :print %>
 <%= stylesheet_link_tag "global", :media => :screen %>
 <!--[if lt IE 8]><%= stylesheet_link_tag "ie", :media => :screen %><![endif]-->
+
+<script type="text/javascript"
+        src="http://www.google.com/jsapi?key=<%= GOOGLE_AJAX_KEY %>"></script>
+
+<script type="text/javascript">
+  google.load('jquery', '1.3.2')
+</script>
