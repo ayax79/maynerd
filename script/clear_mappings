@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require "rubygems"
+require File.expand_path("lib/rpx")
+
+RPX_BASE_URL = 'https://rpxnow.com'
+RPX_API_KEY = '07d8dfed559df3751e05fdb4ab2bdaf94d4b48c4'
+RPX_REALM = 'maynerd'
+
+rpx = Rpx::RpxHelper.new(RPX_API_KEY, RPX_BASE_URL, RPX_REALM)
+            
+rpx.all_mappings.each  do | primary_key, identifier |
+  puts "clearing identifier: #{identifier} : #{primary_key}"
+  puts rpx.unmap identifier, primary_key
+end
