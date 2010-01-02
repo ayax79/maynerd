@@ -2,6 +2,7 @@ require 'uri'
 require 'net/http'
 require 'net/https'
 require 'json'
+require 'cgi'
 
 module Rpx
   class RpxException < StandardError
@@ -56,10 +57,12 @@ module Rpx
       return parts.join('')
     end
 
-    def api_call(method_name, partial_query)
+    def api_call(method_name, partial_query={})
       url = URI.parse("#{@base_url}/api/v2/#{method_name}")
 
-      query = partial_query.dup
+      query = partial_query.dup 
+      puts query
+
       query['format'] = 'json'
       query['apiKey'] = @api_key
 
