@@ -109,7 +109,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "#{identifier} added to your account"
       redirect_to :controller => "site", :action => "index"
     else
-      if @current_user.id == primary_key.to_i
+      if self.current_user.id == primary_key.to_i
         flash[:notice] = "That OpenID was already associated with this account"
         redirect_to :controller => "site", :action => "index"
       else
