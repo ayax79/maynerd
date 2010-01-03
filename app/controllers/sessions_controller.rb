@@ -36,8 +36,6 @@ class SessionsController < ApplicationController
 
 
   def rpx_return
-    logout_keeping_session!
-
     if params[:error]
       flash[:error] = "OpenID Authentication Failed: #{params[:error]}"
       redirect_back_or_default('/')
@@ -60,27 +58,28 @@ class SessionsController < ApplicationController
 
       username = determine_username_from_rpx_response(data)
       user = User.find_by_login username
+
+      # we will setup a user if it doesn't exist and
+      # forward to the registration page so that it can be finished up.
       if !user
-        # we need to create a new user
-        user = User.new
-        user.login = username
-        #hack since the default restful configuration generated user required a password
-        user.password = generate_password
-        #noinspection RubyResolve
-        user.password_confirmation = user.password
-        user.save!
-        user.reload
+        reg = { :login => username, :open_id => identifier}
+        session[:registration] = reg
+        session[:open_id] = identifier
+      else
+        # username already exists, log them in a
+
+        @rpx.map identifier, user.id
+        self.current_user = user
       end
 
-      @rpx.map identifier, user.id
-      self.current_user = user
-
-    elsif identifier
-      self.current_user = User.find(identifier)
+    else
+      self.current_user = User.find(primary_key)
     end
 
     if logged_in?
       redirect_to :controller => 'site', :action => 'index'
+    elsif session[:registration]
+      redirect_to :controller => 'users', :action => 'new'
     else
       redirect_back_or_default('/')
     end
