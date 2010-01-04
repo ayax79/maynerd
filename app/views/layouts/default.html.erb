@@ -8,9 +8,12 @@
 <body>
 
 <div class="container">
-  <% if flash[:notice] %>
-      <div class="notice prepend-top span-24 last"><%= flash[:notice] %></div>
-  <% end %>
+  <div class="notice prepend-top span-24 last" style="display:none;">
+    <div class="notice-message span-22"></div>
+    <div class="notice-close prepend-top span-2 last">
+      <a href="#">Close</a>
+    </div>
+  </div>
   <%= yield %>
 </div>
 

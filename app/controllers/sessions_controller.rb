@@ -1,8 +1,8 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
 
-  skip_before_filter :login_required
   skip_before_filter :verify_authenticity_token
+  skip_before_filter :login_required, :only => [ :new, :create, :destroy, :rpx_return ]
 
   def new
   end
@@ -116,7 +116,7 @@ class SessionsController < ApplicationController
         # The OpenID was already associated with a different user account.
         session[:identifier] = identifier
         @other_user = User.find_by_id primary_key
-        flash[:notice] = "That OpenID was already associated with #{@other_user.login}"
+        flash[:notice] = "That OpenID was already associated with #{@other_user.login}, <a onclick=\"javascript:RPXUtil.unmap(\\'#{identifier}\\')\" href=\"#\">Unmap</a>?"
         redirect_to :controller => "site", :action => "index"
       end
     end
@@ -124,14 +124,18 @@ class SessionsController < ApplicationController
   end
 
   def rpx_unmap
-    identifier = params[:openid]
+    identifier = params[:open_id]
 
     @rpx.unmap identifier, self.current_user.id
-    flash[:notice] = "OpenID #{identifier} removed"
 
-    redirect_to :controller => :site, :action => "index"
+    respond_to do |format|
+      format.json { render :json => "OpenID #{identifier} removed" }
+      format.html do
+        flash[:notice] = "OpenID #{identifier} removed"
+        redirect_to :controller => :site, :action => "index"
+      end
+    end
   end
-
 
   protected
   # Track failed login attempts

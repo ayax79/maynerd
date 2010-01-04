@@ -7,3 +7,8 @@
     border: 1px solid black;
     padding: 3px 5px 3px 5px;
 }
+
+.notice-close {
+    text-align: right;
+    vertical-align: bottom;
+}

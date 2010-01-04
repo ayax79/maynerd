@@ -7,5 +7,23 @@
         src="http://www.google.com/jsapi?key=<%= GOOGLE_AJAX_KEY %>"></script>
 
 <script type="text/javascript">
-  google.load('jquery', '1.3.2')
+    google.load('jquery', '1.3.2');
+</script>
+
+<%= javascript_include_tag "global" %>
+
+<script type="text/javascript">
+    RPXUtil.unmap_url = '<%= url_for :controller => 'sessions', :action => 'rpx_unmap', :format => :json %>';
+
+    $(function() {
+        $('.notice-close a').click(function() {
+            Notify.clear_notice();
+        });
+
+    <% # Handle messages from the flash context     %>
+    <% if flash[:notice] %>
+        Notify.notice('<%= flash[:notice] %>');
+    <% end %>
+    });
+
 </script>
