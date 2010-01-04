@@ -1,3 +1,16 @@
+<script type="text/javascript">
+    $(function() {
+
+        $('.editable').each(function (i) {
+            $(this).editable('<%= url_for :controller => 'users', :action => 'single_update', :format => :json, :id => @current_user.id %>',
+            {
+                method : "PUT",
+                name : 'user[' + this.id.split("-")[1] + ']'
+            });
+        });
+    });
+</script>
+
 
 <div class="span-24 prepend-top last">
   Would you like to <%= link_to "Logout?", :controller => 'sessions', :action => 'destroy' %>
@@ -5,11 +18,11 @@
 <div class="span-8 append-16 prepend-top last">
   <div class="line-box">
     <div class="section-title">User Information</div>
-    Name: <span class="editable"><%= @current_user.name %></span>
+    Name: <span id="edit-name" class="editable"><%= @current_user.name %></span>
     <br/>
-    Login: <span class="editable"><%= @current_user.login %></span>
+    Login: <span id="edit-login" class="editable"><%= @current_user.login %></span>
     <br/>
-    Email: <span class="editable"><%= @current_user.email %></span>
+    Email: <span id="edit-email" class="editable"><%= @current_user.email %></span>
   </div>
 </div>
 <div class="span-8 append-16 prepend-top last">

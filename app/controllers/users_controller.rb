@@ -1,3 +1,5 @@
+require 'json'
+
 class UsersController < ApplicationController
 
   skip_before_filter :login_required, :only => [ :create, :new ]
@@ -39,13 +41,21 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
+  def single_update
     user = self.current_user
 
-    respond_to do |format|
-      if user.update_attributes(params[:user])
-        format.json { head :ok }
-        format.xml { head :ok }
+    user_params = params[:user]
+
+    # there should only be one in the hash but iterate anyway
+    user_params.each { |k, v| user.update_attribute k, v }
+
+    respond_to do | format |
+      format.json do
+        if !user_params.empty?
+          render :json => user_params[user_params.keys.first]
+        else
+          render :head => :ok
+        end
       end
     end
 
